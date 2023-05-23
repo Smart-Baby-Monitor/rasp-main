@@ -46,7 +46,7 @@ class DataTransafer:
     def send_video(video: Video):
         print(video)
         logger.info("Sending Video data ")
-        url = env.api_base_url+"/client/auth/data"
+        url = env.api_base_url+"/client/data"
         try:
             file_path = video.get_filepath()
             # Set the parameters
@@ -77,7 +77,7 @@ class DataTransafer:
     def send_audio(audio: Audio):
         print(audio)
         logger.info("Sending Audio")
-        url = env.api_base_url+"/client/auth/data"
+        url = env.api_base_url+"/client/data"
 
         file_path = audio.get_filepath()
         try:
@@ -105,7 +105,7 @@ class DataTransafer:
     def send_motion(motion: Motion):
         print(motion)
         logger.info("Sending Motion data")
-        url = env.api_base_url+"/client/auth/data"
+        url = env.api_base_url+"/client/data"
 
         try:
             file_path = motion.get_filepath()
