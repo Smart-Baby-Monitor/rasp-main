@@ -6,7 +6,7 @@ from utils import utils
 # Configurations DON'T unless you understand them
 CHUNK = 1024  # Number of frames per buffer
 FORMAT = pyaudio.paInt16  # Audio format (16-bit signed integer)
-CHANNELS = 1  # Mono audio
+CHANNELS = 2  # Mono audio
 RATE = 44100  # Sampling rate
 
 
