@@ -7,6 +7,8 @@ sudo apt-get install libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-de
 pip install pyaudio
 pip install picamera
 pip install moviepy
+pip install sounddevice
+pip install soundfile
 
 # Change directory to where the script is located
 cd "$(dirname "$0")"
