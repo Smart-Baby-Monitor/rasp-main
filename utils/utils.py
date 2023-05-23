@@ -18,10 +18,10 @@ class DbAccess:
         query = f"UPDATE {table} SET "
         if data:
             for key, value in data.items():
-                query += key + " ='" + value + "',"
+                query += str(key) + " ='" + str(value) + "',"
             query = query[:-1] + " where "
         for key, value in where.items():
-            query += key + " = '" + value + "' and "
+            query += str(key) + " = '" + str(value) + "' and "
         query = query[:-4]
         self.query = query
         try:
@@ -38,7 +38,7 @@ class DbAccess:
         values = "("
         cols = "("
         for key, value in data.items():
-            cols += key + ","
+            cols += str(key) + ","
             values += "'" + str(value) + "',"
 
         cols = cols[:-1] + ")"
