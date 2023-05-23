@@ -10,6 +10,7 @@ from utils.utils import DbAccess
 class Account:
     @staticmethod
     def login():
+        return ""
         logger.info("Auth: Logging in...")
         email=env.email
         password=env.password
