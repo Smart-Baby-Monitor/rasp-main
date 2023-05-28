@@ -52,7 +52,7 @@ class DataTransafer:
             # Set the parameters
             data = {
                 "type": "video",
-                "title": video.get_filename,#video.get_title(),
+                "title": video.get_filename(),#video.get_title(),
                 "description": "This is my video description",
                 "authToken":env.auth_token
   
