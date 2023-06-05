@@ -121,25 +121,11 @@ def initialize():
 
 initialize()
 try: 
-    while True:
-
+    while True:#Main loop 
         capture_data()
         send_data()
         analyze_data()
-        send_data()
-        # capture_thread = threading.Thread(target=capture_data)
-        # analyze_thread = threading.Thread(target=analyze_data)
-        # send_thread = threading.Thread(target=send_data)
-        # Start the threads 
-        # capture_thread.start()
-        # analyze_thread.start()
-        # send_thread.start()
-        # Wait for all threads to complete
-        # capture_thread.join()
-        # analyze_thread.join()
-        # send_thread.join()
-   
-        
+        send_data()       
 except Exception as e:
     logger.exception("Exception Occured ")
     logger.exception(e)
