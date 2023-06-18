@@ -38,7 +38,10 @@ class Model:
     def get_synced_at(self):
         return self.data['synced_at']
     def get_label(self):
-        return self.data['label']
+        label = self.data['label']
+        if not label :
+            label = "None"
+        return label
 
 
 class Video(Model):

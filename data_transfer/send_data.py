@@ -48,19 +48,18 @@ class DataTransafer:
         url = env.api_base_url+"/client/data"
         try:
             file_path = video.get_filepath()
+            label = video.get_label()
             # Set the parameters
             data = {
                 "type": "video",
                 "title": video.get_filename(),#video.get_title(),
                 "description": "This is my video description",
-                "authToken":env.auth_token,
-                "label":video.get_label()
-  
+                "label": label
             }
 
             ret = DataTransafer.send(url,data,file_path)
             if ret :
-                logger.info("Video sennt Successfully ")
+                logger.info("Video sent Successfully ")
                 return True
             else :
                 logger.info("Failed to send video")
