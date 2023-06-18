@@ -276,7 +276,11 @@ def create_folders():
 
     parent_folder = env.file_storage
     folder_names = ["audios", "videos", "motions"]
-
+    logs_folder = env.logs_folder
+    # Create logs folder 
+    if not os.path.exists(logs_folder):
+        os.mkdirs(logs_folder)
+        
     # Check if parent folder exists
     if not os.path.exists(parent_folder):
         os.makedirs(parent_folder)
