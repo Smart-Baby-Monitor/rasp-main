@@ -1,5 +1,5 @@
-from data_analysis.classifier import label_audio
-from data_storage.models import Audio
+from data_analysis.classifier import label_audio, label_motion, label_video
+from data_storage.models import Audio, Motion
 from utils import logger
 from utils.utils import DbAccess 
 
@@ -19,7 +19,23 @@ for audio in audios :
         audio_label = label_audio(audio)
         logger.info(f"audio labeled as {audio_label}")
         db.update(model.table,{"label":audio_label},{"id":model.getId()})
-        logger.info("Labelled successfully")
+        logger.info("Audio Labelled successfully")
     except Exception as e:
         logger.error(e)
+
+
+model = Motion()
+for motion in motions :
+    try:
+        model.load_data(motion)
+        logger.info(f"Analysing motion {model.getId()}")
+        motion_label = label_motion(motion)
+        logger.info(f"motion labeled as {motion_label}")
+        db.update(model.table,{"label":motion_label},{"id":model.getId()})
+        logger.info("Motion Labelled successfully")
+    except Exception as e:
+        logger.error(e)
+
+
+
 logger.info("Finished Analyzing data")

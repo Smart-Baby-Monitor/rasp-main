@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import json
 import os
 import pickle
 import sys
@@ -80,7 +81,32 @@ def label_audio(audio_file_path):
     categories['Laughing'] = categories['903 - Baby laugh']/total*100
     return get_max_category(categories)
 
+def label_motion(motion_file):
+    motion_data = load_json_file(motion_file)
+    total_count = len(motion_data)
+    count_0 = sum(1 for value in motion_data.values() if value == 0)
+    count_1 = total_count - count_0
+
+    percentage_0 = (count_0 / total_count) * 100
+    percentage_1 = (count_1 / total_count) * 100
+
+    if percentage_0 >= 70:
+        return "No Motion"
+    else:
+        return "Motion"
+    
+def label_video(audio_file_path):
+    [predictions, is_baby_crying] = classify_audio(audio_file_path)
+    
+    return "None" #get_max_category(categories)
+
+
 def get_max_category(categories):
     max_category = max(categories, key=categories.get)
     return max_category
+
+def load_json_file(file_path):
+    with open(file_path, 'r') as json_file:
+        data = json.load(json_file)
+    return data
 
