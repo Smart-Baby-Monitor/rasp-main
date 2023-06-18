@@ -37,7 +37,8 @@ class Model:
         return self.data['updated_at']
     def get_synced_at(self):
         return self.data['synced_at']
-    
+    def get_label(self):
+        return self.data['label']
 
 
 class Video(Model):
