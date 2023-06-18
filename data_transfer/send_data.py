@@ -54,7 +54,8 @@ class DataTransafer:
                 "type": "video",
                 "title": video.get_filename(),#video.get_title(),
                 "description": "This is my video description",
-                "authToken":env.auth_token
+                "authToken":env.auth_token,
+                "label":video.get_label()
   
             }
 
@@ -86,7 +87,8 @@ class DataTransafer:
                 "type": "audio",
                 "title": audio.get_filename(),
                 "description": "This is my audio description",
-                "authToken":env.auth_token
+                "authToken":env.auth_token,
+                "label":audio.get_label()
             }
 
             ret = DataTransafer.send(url,data,file_path)
@@ -114,7 +116,8 @@ class DataTransafer:
                 "type": "motion",
                 "title": motion.get_filename(),
                 "description": "This is my motion description",
-                "authToken":env.auth_token
+                "authToken":env.auth_token,
+                "label":motion.get_label()
             }
 
             ret = DataTransafer.send(url,data,file_path)
