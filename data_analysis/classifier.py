@@ -68,3 +68,19 @@ def classify_audio(audio_file_path):
     
     return [string_predictions ,is_baby_crying]
 
+def label_audio(audio_file_path):
+    [predictions, is_baby_crying] = classify_audio(audio_file_path)
+    categories = {"Crying":0,"Silence":0,"Noise":0,"Laughing":0}
+    for prediction in predictions:
+        categories[prediction] +=1
+    total = len(predictions) 
+    categories["Crying"] = categories['301 - Crying baby']/total*100
+    categories["Silence"] = categories['901 - Silence']/total*100
+    categories["Noise"] = categories['902 - Noise']/total*100
+    categories['Laughing'] = categories['903 - Baby laugh']/total*100
+    return get_max_category(categories)
+
+def get_max_category(categories):
+    max_category = max(categories, key=categories.get)
+    return max_category
+
