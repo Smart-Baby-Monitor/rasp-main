@@ -16,7 +16,7 @@ class DataTransafer:
            
             logger.info("DT.send: Sending Data")
             data['auth_token'] = account.Account.get_auth_token() 
-            data['device_id'] = 'xz5pUvRCkLO2umS'
+            data['device_id'] = env.device_id
             files = {
                 "file": open(file_path, "rb")
             }
