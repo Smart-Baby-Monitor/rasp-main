@@ -1,5 +1,12 @@
 import logging
 import env
+import os
+
+logs_folder = env.logs_folder
+# Create logs folder 
+if not os.path.exists(logs_folder):
+    os.mkdirs(logs_folder)
+    
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
