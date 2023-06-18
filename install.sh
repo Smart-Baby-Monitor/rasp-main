@@ -9,7 +9,7 @@ pip install picamera
 pip install moviepy
 pip install sounddevice
 pip install soundfile
-
+pip install ffmpeg
 # Change directory to where the script is located
 cd "$(dirname "$0")"
 
