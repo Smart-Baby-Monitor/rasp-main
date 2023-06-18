@@ -279,7 +279,7 @@ def create_folders():
     logs_folder = env.logs_folder
     # Create logs folder 
     if not os.path.exists(logs_folder):
-        os.mkdirs(logs_folder)
+        os.makedirs(logs_folder)
         
     # Check if parent folder exists
     if not os.path.exists(parent_folder):
