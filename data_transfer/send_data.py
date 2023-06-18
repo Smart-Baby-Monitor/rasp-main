@@ -190,9 +190,9 @@ class DataTransafer:
         logger.info(f"Sending data chunk size {chunk}")
         db = DbAccess()
         
-        videos = db.selectQuery("SELECT * FROM videos WHERE synced_at IS NULL LIMIT "+ str(chunk))
-        audios = db.selectQuery("SELECT * FROM audios WHERE synced_at IS NULL LIMIT "+ str(chunk))
-        motions = db.selectQuery("SELECT * FROM motions WHERE synced_at IS NULL LIMIT "+str(chunk))
+        videos = db.selectQuery("SELECT * FROM videos WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+ str(chunk))
+        audios = db.selectQuery("SELECT * FROM audios WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+ str(chunk))
+        motions = db.selectQuery("SELECT * FROM motions WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+str(chunk))
         logger.info("Using upto 3 threads to send data")
        
         # Create multiple threads
