@@ -15,13 +15,12 @@ class DataTransafer:
         try:
            
             logger.info("DT.send: Sending Data")
-            data['auth_token'] = account.Account.get_auth_token() 
-            data['device_id'] = 'xz5pUvRCkLO2umS'
+            data['device_id'] = env.device_id
             files = {
                 "file": open(file_path, "rb")
             }
             logger.info(f"Making API call {url}")
-            
+            logger.info(data)
             response = requests.post(url, data=data, files=files,headers={
                             "X-Requested-With": "XMLHttpRequest"})
             
@@ -49,18 +48,18 @@ class DataTransafer:
         url = env.api_base_url+"/client/data"
         try:
             file_path = video.get_filepath()
+            label = video.get_label()
             # Set the parameters
             data = {
                 "type": "video",
                 "title": video.get_filename(),#video.get_title(),
                 "description": "This is my video description",
-                "authToken":env.auth_token
-  
+                "label": label
             }
 
             ret = DataTransafer.send(url,data,file_path)
             if ret :
-                logger.info("Video sennt Successfully ")
+                logger.info("Video sent Successfully ")
                 return True
             else :
                 logger.info("Failed to send video")
@@ -86,7 +85,8 @@ class DataTransafer:
                 "type": "audio",
                 "title": audio.get_filename(),
                 "description": "This is my audio description",
-                "authToken":env.auth_token
+                "authToken":env.auth_token,
+                "label":audio.get_label()
             }
 
             ret = DataTransafer.send(url,data,file_path)
@@ -114,7 +114,8 @@ class DataTransafer:
                 "type": "motion",
                 "title": motion.get_filename(),
                 "description": "This is my motion description",
-                "authToken":env.auth_token
+                "authToken":env.auth_token,
+                "label":motion.get_label()
             }
 
             ret = DataTransafer.send(url,data,file_path)
@@ -189,9 +190,9 @@ class DataTransafer:
         logger.info(f"Sending data chunk size {chunk}")
         db = DbAccess()
         
-        videos = db.selectQuery("SELECT * FROM videos WHERE synced_at IS NULL LIMIT "+ str(chunk))
-        audios = db.selectQuery("SELECT * FROM audios WHERE synced_at IS NULL LIMIT "+ str(chunk))
-        motions = db.selectQuery("SELECT * FROM motions WHERE synced_at IS NULL LIMIT "+str(chunk))
+        videos = db.selectQuery("SELECT * FROM videos WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+ str(chunk))
+        audios = db.selectQuery("SELECT * FROM audios WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+ str(chunk))
+        motions = db.selectQuery("SELECT * FROM motions WHERE synced_at IS NULL AND label IS NOT NULL LIMIT "+str(chunk))
         logger.info("Using upto 3 threads to send data")
        
         # Create multiple threads

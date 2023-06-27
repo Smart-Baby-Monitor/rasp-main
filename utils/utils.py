@@ -5,7 +5,7 @@ from datetime import datetime
 import subprocess
 
 import os
-
+import ffmpeg
 
 class DbAccess:
     def __init__(self, debug=False):
@@ -156,6 +156,7 @@ class Migration:
             "CREATE TABLE videos ("
             + "video_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "description TEXT  NULL,"
+            + "label TEXT  NULL,"
             + "filename TEXT  NULL,"
             + "filepath TEXT  NULL,"
             + "duration REAL  NULL,"
@@ -167,6 +168,7 @@ class Migration:
             "CREATE TABLE audios ("
             + "audio_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "description TEXT NULL,"
+            + "label TEXT NULL,"
             + "filename TEXT NULL,"
             + "filepath TEXT NULL,"
             + "duration TEXT NULL,"
@@ -178,6 +180,7 @@ class Migration:
             "CREATE TABLE motions ("
             + "motion_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "description TEXT NULL,"
+            + "label TEXT NULL,"
             + "filename TEXT NULL,"
             + "filepath TEXT NULL,"
             + "duration TEXT NULL,"
@@ -277,7 +280,11 @@ def create_folders():
 
     parent_folder = env.file_storage
     folder_names = ["audios", "videos", "motions"]
-
+    logs_folder = env.logs_folder
+    # Create logs folder 
+    if not os.path.exists(logs_folder):
+        os.makedirs(logs_folder)
+        
     # Check if parent folder exists
     if not os.path.exists(parent_folder):
         os.makedirs(parent_folder)
@@ -289,20 +296,14 @@ def create_folders():
             os.makedirs(folder_path)
 
 
-def convert_to_mp4(file_name, keep_original=False):
-    from moviepy.editor import VideoFileClip
-    input_path = get_videos_folder() + file_name
-    # Get the directory and base filename
-    directory = os.path.dirname(input_path)
-    base_filename = os.path.splitext(os.path.basename(input_path))[0]
+def convert_to_mp4(input_path, keep_original=False):
 
-    # Create the new output path with .mp4 extension
-    output_path = os.path.join(directory, base_filename + ".mp4")
+    output_path = os.path.splitext(input_path)[0] + '.mp4'
 
-    # Covert the video
-    clip = VideoFileClip(input_path).subclip(0, 30)
-    clip.set_duration(30)
-    clip.write_videofile(output_path, codec="libx264", audio_codec="aac")
+    input_stream = ffmpeg.input(input_path)
+    output_stream = ffmpeg.output(input_stream, output_path, codec='libx264', crf=23, preset='medium', acodec='aac', audio_bitrate='128k')
+
+    ffmpeg.run(output_stream)
 
     if not keep_original:
         os.remove(input_path)

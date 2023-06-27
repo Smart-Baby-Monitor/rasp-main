@@ -1,24 +1,57 @@
-from data_analysis.classifier import classify_audio 
+from data_analysis.classifier import label_audio, label_motion, label_video
+from data_storage.models import Audio, Motion, Video
+from utils import logger
+from utils.utils import DbAccess 
 
-[predictions, is_baby_crying] = classify_audio("C:\\Users\\codelord\\Desktop\\sqlite\\rasp-main\\dot.ogg")
-print(predictions)
-print("Majority vote", is_baby_crying)
 
-def aggregate_percent(predictions):
-    categories = {"301 - Crying baby":0,"901 - Silence":0,"902 - Noise":0,"903 - Baby laugh":0}
-    for prediction in predictions:
-        categories[prediction] +=1
-    total = len(predictions) 
-    categories["301 - Crying baby"] = categories['301 - Crying baby']/total*100
-    categories["901 - Silence"] = categories['901 - Silence']/total*100
-    categories["902 - Noise"] = categories['902 - Noise']/total*100
-    categories['903 - Baby laugh'] = categories['903 - Baby laugh']/total*100
-    
-    return {
-        "crying":categories['301 - Crying baby'],
-        "silence":categories['901 - Silence'],
-        "noise":categories["902 - Noise"],
-        "laughing":categories['903 - Baby laugh']
-    }
-    
-print(aggregate_percent(predictions))
+logger.info(f"Analyzing data")
+db = DbAccess()
+
+videos = db.selectQuery("SELECT * FROM videos WHERE label IS NULL LIMIT "+ str(20))
+audios = db.selectQuery("SELECT * FROM audios WHERE label IS NULL LIMIT "+ str(20))
+motions = db.selectQuery("SELECT * FROM motions WHERE label IS NULL LIMIT "+str(20))
+logger.info("Using upto 3 threads to analyze data data")
+logger.info(f"Labeling audios {len(audios)}")
+model = Audio()
+for audio in audios :
+    try:
+        model.load_data(audio)
+        logger.info(f"Analysing audio {model.getId()}")
+        audio_label = label_audio(audio)
+        logger.info(f"audio labeled as {audio_label}")
+        db.update(model.table,{"label":audio_label},{"id":model.getId()})
+        logger.info("Audio Labelled successfully")
+    except Exception as e:
+        logger.error(e)
+
+
+logger.info(f"Labeling motions {len(motions)}")
+model = Motion()
+for motion in motions :
+    try:
+        model.load_data(motion)
+        logger.info(f"Analysing motion {model.getId()}")
+        motion_label = label_motion(motion)
+        logger.info(f"motion labeled as {motion_label}")
+        db.update(model.table,{"label":motion_label},{"id":model.getId()})
+        logger.info("Motion Labelled successfully")
+    except Exception as e:
+        logger.error(e)
+
+
+logger.info(f"Labeling videos {len(videos)}")
+model = Video()
+for video in videos :
+    try:
+        model.load_data(video)
+        logger.info(f"Analysing video {model.getId()}")
+        video_label = label_video(motion)
+        logger.info(f"video labeled as {video_label}")
+        db.update(model.table,{"label":video_label},{"id":model.getId()})
+        logger.info("Video Labelled successfully")
+    except Exception as e:
+        logger.error(e)
+
+
+
+logger.info("Finished Analyzing data")

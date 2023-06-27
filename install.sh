@@ -9,7 +9,8 @@ pip install picamera
 pip install moviepy
 pip install sounddevice
 pip install soundfile
-
+pip install ffmpeg
+LLVM_CONFIG=/usr/bin/llvm-config pip3 install llvmlite==0.31.0 numba==0.48.0 colorama==0.3.9 librosa==0.6.3
 # Change directory to where the script is located
 cd "$(dirname "$0")"
 

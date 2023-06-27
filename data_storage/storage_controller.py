@@ -6,7 +6,8 @@ import json
 
 
 def create_video(file_name, date_time):
-    filepath = utils.get_videos_folder() + file_name
+    filepath = utils.convert_to_mp4(utils.get_videos_folder() + file_name,)
+    
     video = Video()
     video.create({
         # "title": title,
