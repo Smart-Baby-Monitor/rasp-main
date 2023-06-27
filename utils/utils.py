@@ -2,6 +2,7 @@ import requests
 import sqlite3
 import env
 from datetime import datetime
+import subprocess
 
 import os
 
@@ -306,3 +307,29 @@ def convert_to_mp4(file_name, keep_original=False):
     if not keep_original:
         os.remove(input_path)
     return output_path
+
+def remove_wifi_connection(ssid):
+    # Remove the network configuration from wpa_supplicant.conf
+    subprocess.run(['sudo', 'sed', '-i', f'/^\s*network={{\s*ssid="{ssid}"\s*$/d', '/etc/wpa_supplicant/wpa_supplicant.conf'])
+
+def connect_to_wifi(ssid, password):
+    remove_wifi_connection(ssid)
+
+    # Generate the wpa_supplicant.conf file contents
+    wpa_supplicant_conf = f'''
+    country=US
+    update_config=1
+    ctrl_interface=/var/run/wpa_supplicant
+
+    network={{
+        ssid="{ssid}"
+        psk="{password}"
+    }}
+    '''
+
+    # Write the contents to the wpa_supplicant.conf file
+    with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as file:
+        file.write(wpa_supplicant_conf)
+
+    # Restart the networking service to apply the changes
+    subprocess.run(['sudo', 'systemctl', 'restart', 'networking'])
