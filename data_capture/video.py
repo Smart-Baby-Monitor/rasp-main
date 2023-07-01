@@ -1,5 +1,5 @@
 import picamera
-from utils import utils
+from utils import logger, utils
 
 
 def capture_video(file_name, seconds=30):
@@ -12,6 +12,7 @@ def capture_video(file_name, seconds=30):
     Returns:
         None
     """
+    logger.info("Capturing Video ...")
     path = utils.get_videos_folder() + file_name
     path.replace("//","/")
     camera = picamera.PiCamera()
@@ -19,3 +20,4 @@ def capture_video(file_name, seconds=30):
     camera.start_recording(path)
     camera.wait_recording(seconds)
     camera.stop_recording()
+    logger.info("Done Capturing Video")

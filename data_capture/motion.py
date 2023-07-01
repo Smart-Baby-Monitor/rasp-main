@@ -3,7 +3,7 @@ import json
 import RPi.GPIO as GPIO
 import time
 import env
-from utils import utils
+from utils import logger, utils
 
 
 def capture_motion(file_name, seconds=30, interval=1) -> dict:
@@ -20,7 +20,7 @@ def capture_motion(file_name, seconds=30, interval=1) -> dict:
         Raises:
             Exception: 
     """
-
+    logger.info("Capturing motion")
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
     # Read output from PIR motion sensor
@@ -40,5 +40,5 @@ def capture_motion(file_name, seconds=30, interval=1) -> dict:
     path.replace("//","/")
     with open(path, "w") as json_file:
         json.dump(dict, json_file)
-
+    logger.info("Done Capturing Motion")
     return dict
