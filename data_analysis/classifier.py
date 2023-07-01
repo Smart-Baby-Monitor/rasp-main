@@ -7,13 +7,13 @@ import pickle
 import sys
 import warnings
 
-egg_path = '{}/../lib/baby_cry_detection-1.1-py2.7.egg'.format(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(egg_path)
+# egg_path = '{}/../lib/baby_cry_detection-1.1-py2.7.egg'.format(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.append(egg_path)
 
-from data_analysis.reader import Reader
-from data_analysis.baby_cry_predictor import BabyCryPredictor
-from data_analysis.feature_engineer import FeatureEngineer
-from data_analysis.majority_voter import MajorityVoter
+# from data_analysis.reader import Reader
+# from data_analysis.baby_cry_predictor import BabyCryPredictor
+# from data_analysis.feature_engineer import FeatureEngineer
+# from data_analysis.majority_voter import MajorityVoter
 
 
 def classify_audio(audio_file_path):
@@ -70,6 +70,7 @@ def classify_audio(audio_file_path):
     return [string_predictions ,is_baby_crying]
 
 def label_audio(audio_file_path):
+    return "Silence"
     [predictions, is_baby_crying] = classify_audio(audio_file_path)
     categories = {"Crying":0,"Silence":0,"Noise":0,"Laughing":0}
     for prediction in predictions:

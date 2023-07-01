@@ -5,7 +5,7 @@ import env
 import requests
 from utils import account, logger
 
-from utils.utils import DbAccess
+from utils.utils import DbAccess, utils
 
 
 class DataTransafer:
@@ -85,7 +85,6 @@ class DataTransafer:
                 "type": "audio",
                 "title": audio.get_filename(),
                 "description": "This is my audio description",
-                "authToken":env.auth_token,
                 "label":audio.get_label()
             }
 
@@ -114,7 +113,6 @@ class DataTransafer:
                 "type": "motion",
                 "title": motion.get_filename(),
                 "description": "This is my motion description",
-                "authToken":env.auth_token,
                 "label":motion.get_label()
             }
 
@@ -219,3 +217,26 @@ class DataTransafer:
     @staticmethod
     def synchronize():
         pass
+    
+    def connect_to_wifi():
+        subprocess.run(['sudo', 'sed', '-i', f'/^\s*network={{\s*ssid="{ssid}"\s*$/d', '/etc/wpa_supplicant/wpa_supplicant.conf'])
+        # Generate the wpa_supplicant.conf file contents
+        wpa_supplicant_conf = f'''
+            country=US
+            update_config=1
+            ctrl_interface=/var/run/wpa_supplicant
+
+            network={{
+                ssid="{ssid}"
+                psk="{password}"
+            }}
+        '''
+
+        # Write the contents to the wpa_supplicant.conf file
+        with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as file:
+            file.write(wpa_supplicant_conf)
+
+        # Restart the networking service to apply the changes
+        subprocess.run(['sudo', 'systemctl', 'restart', 'networking'])
+
+
