@@ -25,10 +25,11 @@ class DbAccess:
             query += str(key) + " = '" + str(value) + "' and "
         query = query[:-4]
         self.query = query
+        print(query)
         try:
             self.sql(query)
-        except:
-            print("Exception occured")
+        except Exception as e:
+            print("Exception occured", e)
 
     def sql(self, sql: str):
         cursor = self.conn.cursor()
