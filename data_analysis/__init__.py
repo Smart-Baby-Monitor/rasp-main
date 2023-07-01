@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import librosa
+# import librosa
 
 __all__ = [
     'Reader'
