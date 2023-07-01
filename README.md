@@ -1,5 +1,5 @@
 # Raspberry Subsystem
-
+i
 This consists of the modules and routines that will run on the raspberry pi to capture, process and transmit data and files.
 This is part of the Smart Baby Monitor, A system to help parents and infant care takers
 to monitor thier babies.
