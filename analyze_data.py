@@ -18,7 +18,7 @@ if audios:
         try:
             model.load_data(audio)
             logger.info(f"Analysing audio {model.getId()}")
-            audio_label = label_audio(audio)
+            audio_label = label_audio(model.get_filepath())
             logger.info(f"audio labeled as {audio_label}")
             print("So close")
             db.update(model.table,{"label":audio_label},{"audio_id":model.getId()})
@@ -35,7 +35,7 @@ if motions:
         try:
             model.load_data(motion)
             logger.info(f"Analysing motion {model.getId()}")
-            motion_label = label_motion(motion)
+            motion_label = label_motion(model.get_filepath())
             logger.info(f"motion labeled as {motion_label}")
             db.update(model.table,{"label":motion_label},{"motion_id":model.getId()})
             logger.info("Motion Labelled successfully")
@@ -49,7 +49,7 @@ if videos:
         try:
             model.load_data(video)
             logger.info(f"Analysing video {model.getId()}")
-            video_label = label_video(motion)
+            video_label = label_video(model.get_filepath())
             logger.info(f"video labeled as {video_label}")
             db.update(model.table,{"label":video_label},{"video_id":model.getId()})
             logger.info("Video Labelled successfully")
