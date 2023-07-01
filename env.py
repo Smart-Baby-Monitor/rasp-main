@@ -6,4 +6,4 @@ motion_sensor_pin = 11
 logs_folder = "logs"
 wifi_ssd = ""
 wifi_password = ""
-device_id = "xz5pUvRCkLO2umS"
+device_id = "mXnysefpO6sD1Bh"
