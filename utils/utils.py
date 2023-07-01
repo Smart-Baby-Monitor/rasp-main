@@ -34,6 +34,7 @@ class DbAccess:
     def sql(self, sql: str):
         cursor = self.conn.cursor()
         cursor.execute(sql)
+        self.commit()
 
     def insert(self, table, data):
         query = "insert into " + table
