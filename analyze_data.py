@@ -11,7 +11,7 @@ videos = db.selectQuery("SELECT * FROM videos WHERE label IS NULL LIMIT "+ str(2
 audios = db.selectQuery("SELECT * FROM audios WHERE label IS NULL LIMIT "+ str(20))
 motions = db.selectQuery("SELECT * FROM motions WHERE label IS NULL LIMIT "+str(20))
 logger.info("Using upto 3 threads to analyze data data")
-if type(audios) == 'list':
+if audios:
     logger.info(f"Labeling audios {len(audios)}")
     model = Audio()
     for audio in audios :
@@ -26,7 +26,7 @@ if type(audios) == 'list':
             logger.error(e)
 
 
-if type(motions) == "list":
+if motions:
     logger.info(f"Labeling motions {len(motions)}")
     model = Motion()
     for motion in motions :
@@ -40,7 +40,7 @@ if type(motions) == "list":
         except Exception as e:
             logger.error(e)
 
-if type(videos) == "list":
+if videos:
     logger.info(f"Labeling videos {len(videos)}")
     model = Video()
     for video in videos :
