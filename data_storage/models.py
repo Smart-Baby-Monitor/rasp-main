@@ -12,7 +12,7 @@ class Model:
         if id:
             self.data = self.select([], {f"{self.key}": id})
     def remove(self,):
-        return self.db.update(self.table,{"synced_at":utils.generate_datetime()},{"id":self.id})
+        return self.db.update(self.table,{"synced_at":utils.generate_datetime()},{self.key:self.id})
     def getId(self):
         return self.id
 
