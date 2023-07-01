@@ -5,7 +5,7 @@ import env
 import requests
 from utils import account, logger
 
-from utils.utils import DbAccess, utils
+from utils.utils import DbAccess
 
 
 class DataTransafer:
