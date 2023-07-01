@@ -97,7 +97,6 @@ def label_motion(motion_file):
         return "Motion"
     
 def label_video(audio_file_path):
-    [predictions, is_baby_crying] = classify_audio(audio_file_path)
     
     return "None" #get_max_category(categories)
 
