@@ -17,8 +17,5 @@ cd "$(dirname "$0")"
 # Make the Python script executable
 chmod +x main.py
 # Add the script execution command to rc.local
-sudo sed -i '$i python3 /path/to/main.py &' /etc/rc.local
-# Reboot the Raspberry Pi
-sudo reboot
-# Exit the script
-exit 0
+sudo sed -i '$i python3 /home/bse23/Desktop/rasp-main/main.py &' /etc/rc.local
+
