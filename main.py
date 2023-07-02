@@ -123,17 +123,21 @@ def init():
 try: 
     while True:
         
-        capture_thread = threading.Thread(target=capture_data)
-        analyze_thread = threading.Thread(target=analyze_data)
-        send_thread = threading.Thread(target=send_data)
+        capture_data()
+        send_data()
+        analyze_data()
+        send_data()
+        # capture_thread = threading.Thread(target=capture_data)
+        # analyze_thread = threading.Thread(target=analyze_data)
+        # send_thread = threading.Thread(target=send_data)
         # Start the threads 
-        capture_thread.start()
-        analyze_thread.start()
-        send_thread.start()
+        # capture_thread.start()
+        # analyze_thread.start()
+        # send_thread.start()
         # Wait for all threads to complete
-        capture_thread.join()
-        analyze_thread.join()
-        send_thread.join()
+        # capture_thread.join()
+        # analyze_thread.join()
+        # send_thread.join()
    
         
 except Exception as e:
