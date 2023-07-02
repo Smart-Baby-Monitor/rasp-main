@@ -115,15 +115,14 @@ def send_data():
     logger.info("Data Send Start")
     DataTransafer.send_data()
     logger.info("Data Send Stop")
-def init():
+def initialize():
     utils.create_folders()
-
     utils.run_migrations()
 
-int()
+initialize()
 try: 
     while True:
-        
+
         capture_data()
         send_data()
         analyze_data()
