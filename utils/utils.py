@@ -13,6 +13,7 @@ class DbAccess:
         self.conn = sqlite3.connect(env.database_name)
         self.conn.row_factory = sqlite3.Row  # dict_factory
         self.query = ""
+        self.is_busy = False
         # return self
 
     def update(self, table, data, where):
@@ -134,6 +135,18 @@ class DbAccess:
             if self.debug:
                 print(e)
             return False
+    _is_busy = False
+
+    @staticmethod
+    @property
+    def is_busy():
+        return DbAccess._is_busy
+
+    @staticmethod
+    @is_busy.setter
+    def is_busy(value):
+        DbAccess._is_busy = value
+
 
 
 class Migration:

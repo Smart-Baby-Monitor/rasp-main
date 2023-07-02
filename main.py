@@ -122,6 +122,7 @@ def init():
 
 try: 
     while True:
+        
         capture_thread = threading.Thread(target=capture_data)
         analyze_thread = threading.Thread(target=analyze_data)
         send_thread = threading.Thread(target=send_data)
