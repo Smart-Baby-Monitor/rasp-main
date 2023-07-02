@@ -20,4 +20,5 @@ def capture_video(file_name, seconds=30):
     camera.start_recording(path)
     camera.wait_recording(seconds)
     camera.stop_recording()
+    camera.close()
     logger.info("Done Capturing Video")

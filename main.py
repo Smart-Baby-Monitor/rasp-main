@@ -120,6 +120,7 @@ def init():
 
     utils.run_migrations()
 
+int()
 try: 
     while True:
         
