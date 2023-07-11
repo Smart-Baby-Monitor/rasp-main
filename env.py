@@ -4,6 +4,6 @@ logs_storage = "logs"
 api_base_url = "http://162.243.162.143/api/v1"
 motion_sensor_pin = 11
 logs_folder = "logs"
-wifi_ssd = ""
+wifi_ssid = ""
 wifi_password = ""
 device_id = "mXnysefpO6sD1Bh"

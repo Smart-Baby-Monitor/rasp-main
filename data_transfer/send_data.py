@@ -1,4 +1,5 @@
 import os
+import subprocess
 import threading
 from data_storage.models import Audio, Motion, Video
 import env
@@ -219,7 +220,7 @@ class DataTransafer:
         pass
     
     def connect_to_wifi():
-        subprocess.run(['sudo', 'sed', '-i', f'/^\s*network={{\s*ssid="{ssid}"\s*$/d', '/etc/wpa_supplicant/wpa_supplicant.conf'])
+        subprocess.run(['sudo', 'sed', '-i', f'/^\s*network={{\s*ssid="{env.wifi_ssid}"\s*$/d', '/etc/wpa_supplicant/wpa_supplicant.conf'])
         # Generate the wpa_supplicant.conf file contents
         wpa_supplicant_conf = f'''
             country=US
@@ -227,8 +228,8 @@ class DataTransafer:
             ctrl_interface=/var/run/wpa_supplicant
 
             network={{
-                ssid="{ssid}"
-                psk="{password}"
+                ssid="{env.wifi_ssid}"
+                psk="{env.wifi_password}"
             }}
         '''
 
